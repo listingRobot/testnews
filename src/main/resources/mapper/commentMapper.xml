@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.testnews.dao.CommentDao">
+    <select id="getByNewsId" parameterType="int" resultType="Comment">
+        select *
+        from news_comment
+        where newsid = #{newsId}
+        order by createdate desc
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from news_comment where newsid = #{newsId}
+    </delete>
+
+    <insert id="add" parameterType="Comment">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            select last_insert_id()
+        </selectKey>
+        insert into news_comment(newsid,content,author,createdate)
+        values (#{newsId},#{content},#{author},#{createDate},)
+    </insert>
+
+</mapper>

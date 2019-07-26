@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.testnews.dao.DetailDao">
+    <select id="getByTitle" parameterType="hashmap" resultType="Detail">
+        select *
+        from news_detail
+        <where>
+            <if test="title != null and title != ''">
+                title like concat('%',#{title},'%')
+            </if>
+        </where>
+        order by createdate desc
+        limit #{from},#{pageSize}
+    </select>
+
+    <select id="getCountByTitle" parameterType="String" resultType="int">
+        select count(*)
+        from news_detail
+        <where>
+            <if test="title != null and title != ''">
+                title like concat('%',#{title},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from news_detail where id = #{id}
+    </delete>
+</mapper>
